@@ -22,7 +22,7 @@ module Wikipedia
     end
 
     def get_wikibase_item
-      uri = "https://en.wikipedia.org/w/api.php?action=query&prop=pageprops&format=json&origin=*&titles=#{[@person.first_name.to_s.capitalize, @person.second_name.to_s.capitalize].join('_')}"
+      uri = "https://en.wikipedia.org/w/api.php?action=query&prop=pageprops&format=json&origin=*&titles=#{@person_name}"
       response = Faraday.get(uri)
       response_hash = JSON.parse response.body if response.status == 200
       return @wikibase_item = response_hash["query"]["pages"].flatten[1]["pageprops"]["wikibase_item"]
