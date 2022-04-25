@@ -62,7 +62,7 @@ module Wikipedia
     end
 
     def get_word_count(language_value)
-      uri = "https://#{language_value}.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&srwhat=nearmatch&srlimit=1&srsearch=#{[@person.first_name.to_s.capitalize, @person.second_name.to_s.capitalize].join('_')}"
+      uri = "https://#{language_value}.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&srwhat=nearmatch&srlimit=1&srsearch=#{@person_name}"
       response = Faraday.get(uri)
       response_hash = JSON.parse response.body if response.status == 200
       return response_hash["query"]["search"][0]["wordcount"]
