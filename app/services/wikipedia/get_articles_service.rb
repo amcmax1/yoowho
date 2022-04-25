@@ -4,6 +4,7 @@ module Wikipedia
   class GetArticlesService
     def initialize(options)
       @person = options[:person]
+      @person_name = set_person_name
       @wikibase_item = get_wikibase_item
     end
 
@@ -12,6 +13,13 @@ module Wikipedia
     end
 
     private
+
+    def set_person_name
+      names = []
+      names.push(@person.first_name)
+      names.push(@person.second_name) if @person.second_name.length > 0
+      return names.length > 1 ? names.join('_') : names[0]
+    end
 
     def get_wikibase_item
       uri = "https://en.wikipedia.org/w/api.php?action=query&prop=pageprops&format=json&origin=*&titles=#{[@person.first_name.to_s.capitalize, @person.second_name.to_s.capitalize].join('_')}"
