@@ -31,10 +31,9 @@ module Wikipedia
     def save_articles
       sitelinks = set_relevant_languages
       sitelinks.each do |sitelink|
-        article_url = "https://#{sitelink}.wikipedia.org/wiki/#{[@person.first_name.to_s.capitalize, @person.second_name.to_s.capitalize].join('_')}"
+        article_url = "https://#{sitelink}.wikipedia.org/wiki/#{@person_name}"
         response = Faraday.get(article_url)
         article = Article.new(
-          title: [@person.first_name, @person.second_name].join(' '),
           url: article_url,
           source: Source.find_by(name: "Wikipedia"),
           language: Language.find_by(value: sitelink),
